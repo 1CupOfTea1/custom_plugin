@@ -40,20 +40,20 @@ async function searchLocal() {
 	var startTime = new Date();
 	var from = 2, to = 254, j = 0, k = 0;
 	if (Lampa.Storage.get('torrserver_subnet')) {k = Lampa.Storage.get('torrserver_subnet')} else {k = 0};
-	console.log('Server', 'ÐŸÐ¾Ð´ÑÐµÑ‚ÑŒ: ' + k);
-	console.log('Server', 'Ð¡ÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¾Ñ‚ ' + from + ' Ð´Ð¾ ' + to + ' Ð½Ð°Ñ‡Ð°Ð»Ð¾ÑÑŒ...');
+	console.log('Server', 'Подсеть: ' + k);
+	console.log('Server', 'Сканирование от ' + from + ' до ' + to + ' началось...');
 
 	for (let i = from; i <= to; i++) {
 		fetch('http://192.168.' + k + '.' + i + ':8090', { timeout: 1000 })
 			.then( function() {
-				Lampa.Noty.show('Ð¡ÐµÑ€Ð²ÐµÑ€ Ð½Ð°Ð¹Ð´ÐµÐ½! Ð¡Ð¿Ð¸ÑÐ¾Ðº ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð² Ð¾Ð±Ð½Ð¾Ð²Ð»Ñ‘Ð½!');
+				Lampa.Noty.show('Сервер найден! Список серверов обновлён!');
 				console.log('Server', 'http://192.168.' + k + '.' + i + ':8090'); j = j + 1;
 				if (j==1) {Lampa.Storage.set('LocalServ_1', '192.168.' + k + '.' + i)};
 				if (j==2) {Lampa.Storage.set('LocalServ_2', '192.168.' + k + '.' + i)};
 				if (j==3) {Lampa.Storage.set('LocalServ_3', '192.168.' + k + '.' + i)};
 				if (Lampa.Storage.get('useLocal_auto') == true) Lampa.Storage.set('torrserver_url_two', Lampa.Storage.get('LocalServ_1') + ':8090');
 					if (Lampa.Storage.get('LocalServ_1') !== 'empty') {
-						// Ð·ÐµÐ»Ñ‘Ð½Ñ‹Ð¹
+						// зелёный
 						$('div[data-name="localtorrserv"] > div.settings-param__name').css('color','1aff00')
 					} 
 				})
@@ -61,7 +61,7 @@ async function searchLocal() {
 	
 		var xhr = new XMLHttpRequest();
 		xhr.timeout = 100
-		xhr.open("GET", 'http://192.168.' + k + '.' + i + ':8090', true); //Ð°ÑÐ¸Ð½Ñ…Ñ€Ð¾Ð½Ð½Ñ‹Ð¹ Ð·Ð°Ð¿Ñ€Ð¾Ñ
+		xhr.open("GET", 'http://192.168.' + k + '.' + i + ':8090', true); //асинхронный запрос
 		xhr.send();
 		xhr.onload = function() {
 			if (xhr.status == 200) {
@@ -72,7 +72,7 @@ async function searchLocal() {
 	
 	var endTime = new Date();
 	var totaltime = endTime - startTime;
-	console.log('Server', 'Ð’Ñ€ÐµÐ¼Ñ ÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ: ' + totaltime + ' ms');
+	console.log('Server', 'Время сканирования: ' + totaltime + ' ms');
 	return(j);
 	
 };
@@ -82,9 +82,9 @@ async function proxyAwait() {
 	return JJ
 }
 
-var icon_add_local_server = '<div class="settings-folder" style="padding:0!important"><div style="width:1.8em;height:1.3em;padding-right:.5em"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#00ff11"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"> <path d="M18.5 18.5L22 22" stroke="#ffd505" stroke-width="2.4" stroke-linecap="round"></path> <path d="M9 11.5H11.5M11.5 11.5H14M11.5 11.5V14M11.5 11.5V9" stroke="#00ff11" stroke-width="2.4" stroke-linecap="round"></path> <path d="M6.75 3.27093C8.14732 2.46262 9.76964 2 11.5 2C16.7467 2 21 6.25329 21 11.5C21 16.7467 16.7467 21 11.5 21C6.25329 21 2 16.7467 2 11.5C2 9.76964 2.46262 8.14732 3.27093 6.75" stroke="#ffd505" stroke-width="2.4" stroke-linecap="round"></path> </g></svg></div><div style="font-size:1.3em">Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ñ‹Ð¹ TorrServer</div></div>'
+var icon_add_local_server = '<div class="settings-folder" style="padding:0!important"><div style="width:1.8em;height:1.3em;padding-right:.5em"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#00ff11"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"> <path d="M18.5 18.5L22 22" stroke="#ffd505" stroke-width="2.4" stroke-linecap="round"></path> <path d="M9 11.5H11.5M11.5 11.5H14M11.5 11.5V14M11.5 11.5V9" stroke="#00ff11" stroke-width="2.4" stroke-linecap="round"></path> <path d="M6.75 3.27093C8.14732 2.46262 9.76964 2 11.5 2C16.7467 2 21 6.25329 21 11.5C21 16.7467 16.7467 21 11.5 21C6.25329 21 2 16.7467 2 11.5C2 9.76964 2.46262 8.14732 3.27093 6.75" stroke="#ffd505" stroke-width="2.4" stroke-linecap="round"></path> </g></svg></div><div style="font-size:1.3em">Локальный TorrServer</div></div>'
 
-/* ÐšÐ¾Ð¼Ð¿Ð¾Ð½ÐµÐ½Ñ‚ */
+/* Компонент */
 		Lampa.Settings.listener.follow('open', function (e) {
 					if (e.name == 'main') {
 						Lampa.SettingsApi.addComponent({
@@ -96,7 +96,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						}, 0);
 					}
 		});
-	/* Ð“Ð¾Ð»Ð¾Ð²Ð½Ð¾Ð¹ Ñ€Ð°Ð·Ð´ÐµÐ» */	
+	/* Головной раздел */	
 		Lampa.SettingsApi.addParam({
 					component: 'server',
 					param: {
@@ -121,7 +121,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						});
 					}
 		}); 
-	/* Ð”Ð¾Ñ‡ÐµÑ€Ð½Ð¸Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ð¢Ñ€Ð¸Ð³Ð³ÐµÑ€ */	
+	/* Дочерний элемент Триггер */	
 		Lampa.SettingsApi.addParam({
 					component: 'add_local_server',
 					param: {
@@ -131,8 +131,8 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						default: false
 					},
 					field: {
-						name: 'Ð’ÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð¸ÑÐº',
-						description: 'ÐŸÐ¾Ð¸ÑÐº Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¢Ð¾Ñ€Ñ€Ð¡ÐµÑ€Ð²ÐµÑ€Ð°'
+						name: 'Включить поиск',
+						description: 'Поиск локального ТоррСервера'
 					},
 					onChange: function(value) {
 							if (Lampa.Storage.get('useLocal') == false) {$('div[data-name="search_button"]').hide()} else {$('div[data-name="search_button"]').show()};
@@ -149,7 +149,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						}, 0);
 					}
 		});
-	/* Ð”Ð¾Ñ‡ÐµÑ€Ð½Ð¸Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ ÐŸÑƒÐ½ÐºÑ‚Ñ‹*/
+	/* Дочерний элемент Пункты*/
 	Lampa.SettingsApi.addParam({
 					component: 'add_local_server',
 					param: {
@@ -157,7 +157,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						type: 'button'
 					},
 					field: {
-						name: 'ÐŸÐ¾Ð¸ÑÐº ÑÐµÑ€Ð²ÐµÑ€Ð°',
+						name: 'Поиск сервера',
 						description: ''
 					},
 					onRender: function (item) {
@@ -177,8 +177,8 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						type: 'button'
 					},
 					field: {
-						name: 'Ð˜ÑÐºÐ°Ñ‚ÑŒ ÑÐµÑ€Ð²ÐµÑ€',
-						description: 'ÐÐ°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð´Ð»Ñ Ð½Ð°Ñ‡Ð°Ð»Ð° Ð¿Ð¾Ð¸ÑÐºÐ° ÑÐµÑ€Ð²ÐµÑ€Ð°'
+						name: 'Искать сервер',
+						description: 'Нажмите для начала поиска сервера'
 					},
 					onRender: function (item) {
 						setTimeout(function() {
@@ -189,7 +189,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 							item.on('hover:enter', function () {
 								item.hide();
 								$('div[data-name="localtorrserv"]').hide();
-								//var my_insert = '<div id="my_insert" class="settings-param-title" style="text-align:left;"><span>ÐŸÐ¾Ð¸ÑÐº ÑÐµÑ€Ð²ÐµÑ€Ð°...</span></div>';
+								//var my_insert = '<div id="my_insert" class="settings-param-title" style="text-align:left;"><span>Поиск сервера...</span></div>';
 								//$('div[data-name="useLocal"]').append(my_insert);
 								$('div[data-name="search_button_indicator"]').show();
 								var loader = $('<div class="broadcast__scan" style="margin: 1em 0 0 0"><div></div></div>');
@@ -197,8 +197,8 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 								proxyAwait();
 							setTimeout(function() { 
 								if (Lampa.Storage.get('LocalServ_1') == 'empty') {
-									Lampa.Noty.show('Ð¡ÐµÑ€Ð²ÐµÑ€Ñ‹ Ð½Ðµ Ð¾Ð±Ð½Ð°Ñ€ÑƒÐ¶ÐµÐ½Ñ‹');
-									// Ð·ÐµÐ»Ñ‘Ð½Ñ‹Ð¹
+									Lampa.Noty.show('Серверы не обнаружены');
+									// зелёный
 									$('div[data-name="localtorrserv"] > div.settings-param__name').css('color','ff4d5f')
 									}
 								//$('#my_insert').remove();
@@ -216,7 +216,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						name: 'localtorrserv',
 						type: 'select',
 						values: {
-						   0: 'ÐÐµ Ð²Ñ‹Ð±Ñ€Ð°Ð½',
+						   0: 'Не выбран',
 						   1: '     ',	// 5
 						   2: '       ', // 7
 						   3: '          ' //
@@ -224,8 +224,8 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						default: 0
 					},
 					field: {
-						name: 'Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ñ‹Ð¹ TorrServer (ÑÐ¿Ð¸ÑÐ¾Ðº)',
-						description: 'ÐÐ°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð´Ð»Ñ Ð²Ñ‹Ð±Ð¾Ñ€Ð° ÑÐµÑ€Ð²ÐµÑ€Ð° Ð¸Ð· ÑÐ¿Ð¸ÑÐºÐ° Ð½Ð°Ð¹Ð´ÐµÐ½Ð½Ñ‹Ñ…: Ð¿ÐµÑ€ÐµÐ¿Ð¸ÑˆÐµÑ‚ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð² Ð´Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ð¹ ÑÑÑ‹Ð»ÐºÐµ'
+						name: 'Локальный TorrServer (список)',
+						description: 'Нажмите для выбора сервера из списка найденных: перепишет значение в дополнительной ссылке'
 					},
 					onChange: function (value) {
 						if (value == '0') Lampa.Storage.set('torrserver_url_two', '');
@@ -266,16 +266,16 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						   88: '192.168.88.*',
 						   100: '192.168.100.*',
 						   243: '192.168.243.*',
-						   //999: 'Ð¯ ÐÐµ Ñ€Ð°Ð·Ð±Ð¸Ñ€Ð°ÑŽÑÑŒ'
+						   //999: 'Я Не разбираюсь'
 						},
 						default: 1
 					},
 					field: {
-						name: 'Ð’Ð°ÑˆÐ° Ð¿Ð¾Ð´ÑÐµÑ‚ÑŒ',
-						description: 'Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¸Ð· ÑÐ¿Ð¸ÑÐºÐ° Ð´Ð»Ñ ÑƒÑÐºÐ¾Ñ€ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð¸ÑÐºÐ°'
+						name: 'Ваша подсеть',
+						description: 'Выберите из списка для ускорения поиска'
 					},
 					onChange: function (value) {
-						Lampa.Noty.show('ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð¸ÑÐº ÑÐµÑ€Ð²ÐµÑ€Ð° Ð¿Ð¾ÑÐ»Ðµ ÑÐ¼ÐµÐ½Ñ‹ Ð¿Ð¾Ð´ÑÐµÑ‚Ð¸!');
+						Lampa.Noty.show('Повторите поиск сервера после смены подсети!');
 						if (value == '0') Lampa.Storage.set('torrserver_subnet', '0');
 						if (value == '1') Lampa.Storage.set('torrserver_subnet', '1');
 						if (value == '2') Lampa.Storage.set('torrserver_subnet', '2');
@@ -297,7 +297,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						}, 0);
 					}
 	});
-	/* Ð”Ð¾Ñ‡ÐµÑ€Ð½Ð¸Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ ÐŸÐ¾Ð´ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° */	
+	/* Дочерний элемент Подстановка */	
 		Lampa.SettingsApi.addParam({
 					component: 'add_local_server',
 					param: {
@@ -306,8 +306,8 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 						default: false
 					},
 					field: {
-						name: 'ÐŸÐ¾Ð´ÑÑ‚Ð°Ð²Ð»ÑÑ‚ÑŒ Ð°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸',
-						description: 'Ð’Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÑ‚ Ð² Ð´Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½ÑƒÑŽ ÑÑÑ‹Ð»ÐºÑƒ'
+						name: 'Подставлять автоматически',
+						description: 'Вписывает в дополнительную ссылку'
 					},
 					onChange: function(value) {
 					},
@@ -340,7 +340,7 @@ var icon_add_local_server = '<div class="settings-folder" style="padding:0!impor
 
 }
 
-/* Ð•ÑÐ»Ð¸ Ð²ÑÑ‘ Ð³Ð¾Ñ‚Ð¾Ð²Ð¾ */
+/* Если всё готово */
 if(window.appready) startMe();
 	else {
 		Lampa.Listener.follow('app', function(e) {
@@ -351,4 +351,3 @@ if(window.appready) startMe();
 	}
 
  })(); 
-
