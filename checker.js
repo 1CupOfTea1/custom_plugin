@@ -1,6 +1,7 @@
-(async function() { 
-	'use strict';
-function startMe() {
+(function () {
+    'use strict';
+     Lampa.Platform.tv();
+     function startMe() {
 
 setInterval(function() { 
 	var element2Remove = $('.selectbox-item.selector > div:contains("     ")');
